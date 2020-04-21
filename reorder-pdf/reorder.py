@@ -1,4 +1,5 @@
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfFileWriter
 
 
 def generate_order(total: int):
@@ -39,7 +40,8 @@ def reorder(filename: str, page_order=None):
         if page_order is not None:
             if len(page_order) != len(total):
                 raise ValueError(
-                    "Length of page order must equal total number of pages.")
+                    "Length of page order must equal total number of pages."
+                )
         else:
             page_order = generate_order(total - 1)
 
