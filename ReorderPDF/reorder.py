@@ -22,13 +22,15 @@ def generate_order(total: int):
     return order
 
 
-def reorder(filename: str, page_order=None):
+def reorder(filename: str, page_order=None, output_filename=None):
     """
     Reorder the pages in a pdf based on the specified order.
     If no order is specified, generate_order() is called.
     """
 
-    output_filename = f"reordered_{filename}"
+    if output_filename is None:
+        output_filename = f"reordered_{filename}"
+
     output_pdf = PdfFileWriter()
 
     with open(filename, "rb") as readfile:
