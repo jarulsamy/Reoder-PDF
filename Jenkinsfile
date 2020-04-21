@@ -63,27 +63,27 @@ pipeline {
             }
         }
 
-        stage('Build standalone executable'){
-            when {
-                expression {
-                    currentBuild.result == null || currentBuild == 'SUCCESS'
-                }
-            }
-            steps {
-                sh  ''' source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
-                        conda activate ${BUILD_TAG}
-                        python build_standalone_exe.py
-                    '''
-            }
-            post {
-                always {
-                    // Archive unit tests for the future
-                    archiveArtifacts (allowEmptyArchive: true,
-                                     artifacts: 'dist/ReorderPDF',
-                                     fingerprint: true)
-                }
-            }
-        }
+        // stage('Build standalone executable'){
+        //     when {
+        //         expression {
+        //             currentBuild.result == null || currentBuild == 'SUCCESS'
+        //         }
+        //     }
+        //     steps {
+        //         sh  ''' source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
+        //                 conda activate ${BUILD_TAG}
+        //                 python build_standalone_exe.py
+        //             '''
+        //     }
+        //     post {
+        //         always {
+        //             // Archive unit tests for the future
+        //             archiveArtifacts (allowEmptyArchive: true,
+        //                              artifacts: 'dist/ReorderPDF',
+        //                              fingerprint: true)
+        //         }
+        //     }
+        // }
     }
 
     post {
