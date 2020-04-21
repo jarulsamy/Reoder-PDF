@@ -25,7 +25,8 @@ pipeline {
                 sh  ''' conda create --yes -n ${BUILD_TAG} python
                         source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
                         conda activate ${BUILD_TAG}
-                        pip install pylint
+                        pip install pylint pyinstaller
+                        pip install -r requirements.txt
                     '''
             }
         }
@@ -35,12 +36,12 @@ pipeline {
                 echo "Style check"
                 sh  ''' source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
                         conda activate ${BUILD_TAG}
-                        pylint CHANGE_ME || true
+                        pylint **/*.py || true
                     '''
             }
         }
 
-        stage('Build package') {
+        stage('Build module') {
             when {
                 expression {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
@@ -49,8 +50,6 @@ pipeline {
             steps {
                 sh  ''' source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
                         conda activate ${BUILD_TAG}
-                        pwd
-                        ls
                         python setup.py bdist_wheel
                     '''
             }
@@ -59,6 +58,28 @@ pipeline {
                     // Archive unit tests for the future
                     archiveArtifacts (allowEmptyArchive: true,
                                      artifacts: 'dist/*whl',
+                                     fingerprint: true)
+                }
+            }
+        }
+
+        stage('Build standalone executable'){
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild == 'SUCCESS'
+                }
+            }
+            steps {
+                sh  ''' source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
+                        conda activate ${BUILD_TAG}
+                        python build_standalone_exe.py
+                    '''
+            }
+            post {
+                always {
+                    // Archive unit tests for the future
+                    archiveArtifacts (allowEmptyArchive: true,
+                                     artifacts: 'dist/ReorderPDF',
                                      fingerprint: true)
                 }
             }
