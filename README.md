@@ -1,4 +1,6 @@
-# Python-Template
+# Reorder-PDF
+
+A simple python script to reorder PDF documents.
 
 ## Support
 
