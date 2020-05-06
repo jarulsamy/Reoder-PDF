@@ -5,7 +5,7 @@ setup(
     name="ReorderPDF",
     version="0.0.1",
     packages=find_packages(),
-    install_requires=["pypdf2"],
+    install_requires=["pypdf2", "pyfiglet"],
     author="Joshua Arulsamy",
     author_email="joshua.gf.arul@gmail.com",
     description="A simple pdf page reorder tool",
