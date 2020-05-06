@@ -3,11 +3,19 @@ from PyPDF2 import PdfFileWriter
 
 
 def generate_order(total: int):
-    """
-    Default order used.
+    """Generates a page order, moving from either side inward.
 
-    Moving from either end to center.
-    Personally, I used this when scanning double sized pages using a document feeder.
+    A handy default order when using a document feeder,
+    and scanning doubled sided documents.
+
+    Args:
+        total: Int of total number of pages.
+
+    Returns:
+        list of page numbers in correct order.
+
+    Raises:
+        None
 
     Example, 10 pages.
     >>> generate_order(10)
@@ -23,9 +31,18 @@ def generate_order(total: int):
 
 
 def reorder(filename: str, page_order=None, output_filename=None):
-    """
-    Reorder the pages in a pdf based on the specified order.
-    If no order is specified, generate_order() is called.
+    """Reorder the pages in a pdf based on the specified order.
+
+    Args:
+        filename: Str path to input PDF.
+        page_order: Optional parameter, listing new order of pages.
+        output_filename: Str path to new PDF.
+
+    Returns:
+        None
+
+    Raises:
+        ValueError, if length of page_order != total number of pages.
     """
 
     if output_filename is None:
