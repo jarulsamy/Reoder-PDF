@@ -26,7 +26,6 @@ pipeline {
                         source /var/lib/jenkins/miniconda3/etc/profile.d/conda.sh
                         conda activate ${BUILD_TAG}
                         pip install pylint pyinstaller
-                        pip install -r requirements.txt
                     '''
             }
         }
